@@ -28,7 +28,11 @@ export const API = {
 		return await instance.post<{ result: Product[] }>('', {
 			'action': 'get_items',
 			'params': { 'ids': ids }
-		}).then(res => res.data)
+		}).then(res => {
+			const data = res.data
+
+			return data
+		})
 	},
 	get_fields: async (field: string, offset: number, limit: number) => {
 		return await instance.post('', {

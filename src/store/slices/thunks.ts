@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { API } from '../../api/api'
-import { Product } from '../../types'
+import { productsActions } from './productsSlice'
 
-export const getProducts = createAsyncThunk('products/getIds', async (arg, thunkAPI): Promise<{
-	result: Product[]
-}> => {
+export const getProducts = createAsyncThunk('products/getIds', async (arg, thunkAPI) => {
 	const ids = await thunkAPI.dispatch(getIds()).unwrap().then(res => res.result)
+	const products = await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res.result)
 
-	return await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res)
+	thunkAPI.dispatch(productsActions.setProducts({ products }))
 })
 
 export const getIds = createAsyncThunk('products/getIds', async (arg, thunkAPI) => {

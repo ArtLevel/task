@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Product } from '../../types'
-import { getProducts } from './thunks'
 
 type ProductsSlice = {
 	products: Product[]
@@ -13,13 +12,12 @@ const initialState: ProductsSlice = {
 const slice = createSlice({
 	name: 'products',
 	initialState: initialState,
-	reducers: {},
-	extraReducers: builder => {
-		builder
-			.addCase(getProducts.fulfilled, (state, action) => {
-				state.products = action.payload.result
-			})
+	reducers: {
+		setProducts: (state, action: PayloadAction<{ products: Product[] }>) => {
+			state.products = action.payload.products
+		}
 	}
 })
 
 export const productsReducer = slice.reducer
+export const productsActions = slice.actions
