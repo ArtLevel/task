@@ -5,7 +5,8 @@ import axios from 'axios'
 // Функция для формирования значения X-Auth на основе пароля и временного штампа
 const generateXAuthHeaderValue = () => {
 	const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '')
-	return md5(`${'Valantis'}_${timestamp}`)
+
+	return md5(`Valantis_${timestamp}`)
 }
 
 const instance = axios.create({
@@ -16,7 +17,7 @@ const instance = axios.create({
 })
 
 export const API = {
-	get_ids: async (offset: number, limit: number) => {
+	get_ids: async (offset = 1, limit = 10) => {
 		return await instance.post('', {
 			'action': 'get_ids',
 			'params': { 'offset': offset, 'limit': limit }
