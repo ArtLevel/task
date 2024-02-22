@@ -29,9 +29,20 @@ export const API = {
 			'action': 'get_items',
 			'params': { 'ids': ids }
 		}).then(res => {
-			const data = res.data
+			const data = res.data.result
 
-			return data
+			// Проверка на дубликаты
+			const uniqueArray = data.reduce((accumulator: Product[], currentValue) => {
+				const ids = accumulator.map(item => item.id)
+
+				if (!ids.includes(currentValue.id)) {
+					accumulator.push(currentValue)
+				}
+
+				return accumulator
+			}, [])
+
+			return { result: uniqueArray }
 		})
 	},
 	get_fields: async (field: string, offset: number, limit: number) => {
