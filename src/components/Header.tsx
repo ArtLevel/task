@@ -1,7 +1,10 @@
-import { AppBar, Grid, Toolbar, Typography } from '@mui/material'
+import { AppBar, Grid, LinearProgress, Toolbar, Typography } from '@mui/material'
 import React from 'react'
+import { useAppSelector } from '../store/store'
 
 export const Header = () => {
+	const status = useAppSelector(state => state.app.status)
+
 	return <AppBar position="static">
 		<Toolbar>
 			<Grid container justifyContent="space-between">
@@ -12,6 +15,6 @@ export const Header = () => {
 				</Grid>
 			</Grid>
 		</Toolbar>
-		{/*{loading === 'loading' && <LinearProgress />}*/}
+		{status === 'loading' && <LinearProgress />}
 	</AppBar>
 }

@@ -1,21 +1,16 @@
 import { Grid } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { API } from '../api/api'
-import { Product } from '../types'
+import { useEffect } from 'react'
 import { CardOfProduct } from './CardOfProduct'
+import { useAppDispatch, useAppSelector } from '../store/store'
+import { getProducts } from '../store/slices/thunks'
 
 export const Content = () => {
-	const [ids, setIds] = useState<string[]>([])
-	const [products, setProducts] = useState<Product[]>([])
+	const products = useAppSelector(state => state.products.products)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		API.get_ids().then(res => setIds(res.data.result))
+		dispatch(getProducts())
 	}, [])
-
-	useEffect(() => {
-		API.get_items(ids).then(res => setProducts(res.data.result))
-	}, [ids])
-
 
 	return <Grid container spacing={3} sx={{ padding: 5 }}>
 		{products.map((product) => (

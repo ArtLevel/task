@@ -1,6 +1,7 @@
 // @ts-ignore
 import md5 from 'md5'
 import axios from 'axios'
+import { Product } from '../types'
 
 // Функция для формирования значения X-Auth на основе пароля и временного штампа
 const generateXAuthHeaderValue = () => {
@@ -18,16 +19,16 @@ const instance = axios.create({
 
 export const API = {
 	get_ids: async (offset = 1, limit = 10) => {
-		return await instance.post('', {
+		return await instance.post<{ result: string[] }>('', {
 			'action': 'get_ids',
 			'params': { 'offset': offset, 'limit': limit }
-		})
+		}).then(res => res.data)
 	},
 	get_items: async (ids: string[]) => {
-		return await instance.post('', {
+		return await instance.post<{ result: Product[] }>('', {
 			'action': 'get_items',
 			'params': { 'ids': ids }
-		})
+		}).then(res => res.data)
 	},
 	get_fields: async (field: string, offset: number, limit: number) => {
 		return await instance.post('', {
