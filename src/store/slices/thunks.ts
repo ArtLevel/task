@@ -13,14 +13,24 @@ export type DataForGetFilteredProducts = {
 	product?: string
 }
 
-export const getProducts = createAsyncThunk('products/getProducts', async (arg: DataForAPI, thunkAPI) => {
+export const getProducts = createAsyncThunk('products/getProducts', async (arg: DataForAPI, { dispatch }) => {
 	try {
-		const ids = await thunkAPI.dispatch(getIds(arg)).unwrap().then(res => res ? res.result : [])
-		const products = await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res ? res.result : [])
+		const ids = await dispatch(getIds(arg))
+			.unwrap()
+			.then(res => res ? res.result : [])
 
-		const totalProductsCount = await thunkAPI.dispatch(getIds({})).unwrap().then(res => res ? res.result.length : 0)
 
-		thunkAPI.dispatch(productsActions.setProducts({ products, totalProductsCount, currentPage: arg.currentPage }))
+		const products = await dispatch(getItems({ ids }))
+			.unwrap()
+			.then(res => res ? res.result : [])
+
+		const totalProductsCount = await dispatch(getIds({}))
+			.unwrap()
+			.then(res => res ? res.result.length : 0)
+
+		dispatch(productsActions.setProducts({ products }))
+		dispatch(productsActions.setTotalProductsCount({ totalProductsCount }))
+		dispatch(productsActions.setCurrentPage({ currentPage: arg.currentPage }))
 	} catch (e) {
 		console.error(e)
 	}
@@ -40,7 +50,9 @@ export const getFilteredProducts = createAsyncThunk('products/getFilteredProduct
 	try {
 		const ids = await API.filter(arg).then(res => res ? res.result : [])
 
-		const products = await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res ? res.result : [])
+		const products = await thunkAPI.dispatch(getItems({ ids }))
+			.unwrap()
+			.then(res => res ? res.result : [])
 
 		thunkAPI.dispatch(productsActions.setProducts({ products }))
 	} catch (e) {
