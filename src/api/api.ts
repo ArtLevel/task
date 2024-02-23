@@ -2,7 +2,7 @@
 import md5 from 'md5'
 import axios from 'axios'
 import { Product } from '../types'
-import { DataForGetFilteredProducts } from '../store/slices/thunks'
+import { FormikValues } from '../components/Filter'
 
 type DataForGetFields = {
 	action: string
@@ -83,10 +83,12 @@ export const API = {
 
 		return await instance.post('', data)
 	},
-	filter: async (filterField: DataForGetFilteredProducts) => {
+	filter: async (data: FormikValues) => {
+		const value = Number.isInteger(data.value[0]) ? Number(data.value) : data.value
+		
 		return await instance.post<{ result: string[] }>('', {
 				'action': 'filter',
-				'params': { ...filterField }
+				'params': { [data.filterType]: value }
 			}
 		).then(res => res.data)
 	}

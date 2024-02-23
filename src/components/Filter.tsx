@@ -1,7 +1,14 @@
 import { useFormik } from 'formik'
-import { Button, FormControl, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
+import { Button, FormControl, FormGroup, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../store/store'
-import { DataForGetFilteredProducts, getFilteredProducts } from '../store/slices/thunks'
+import { getFilteredProducts } from '../store/slices/thunks'
+
+export type FormikValues = {
+	filterType: 'product' | 'brand' | 'price'
+	value: string
+}
+
+type FormikErrors = Partial<FormikValues>
 
 export const Filter = () => {
 	const { pageSize, currentPage } = useAppSelector(state => state.products)
@@ -9,48 +16,52 @@ export const Filter = () => {
 
 	const formik = useFormik({
 		validate: (values) => {
+			const error: FormikErrors = {}
+
+			if (values.filterType !== 'price' && !values.value) {
+				error.value = 'Please enter text'
+			}
+
+			if (values.value.length > 100) {
+				error.value = 'It\'s such a big text'
+			}
+
+			return error
 		},
 		initialValues: {
-			price: '',
-			brand: ''
+			filterType: 'product' as FormikValues['filterType'],
+			value: ''
 		},
 		onSubmit: values => {
-			const data: DataForGetFilteredProducts = {}
-
-			if (values.price) {
-				data.price = Number(values.price)
-			}
-			if (values.brand) {
-				data.brand = values.brand
-			}
-
-			dispatch(getFilteredProducts(data))
+			dispatch(getFilteredProducts({ filterType: values.filterType, value: values.value }))
 		}
 	})
+
+	const errorOfTextField = !!(formik.touched.value && formik.errors.value)
 
 	return <Grid container justifyContent="center">
 		<Grid item xs={4}>
 			<form onSubmit={formik.handleSubmit}>
-				<FormControl style={{ display: 'flex' }}>
-					<FormLabel>
-						<p>
-							Filter
-						</p>
-					</FormLabel>
+				<FormControl style={{ display: 'flex', gap: '20px', marginTop: '2rem' }}>
 					<FormGroup>
+						<InputLabel>Filter</InputLabel>
+						<Select
+							label="Filter"
+							{...formik.getFieldProps('filterType')}
+						>
+							<MenuItem value="brand">Brand</MenuItem>
+							<MenuItem value="product">Product</MenuItem>
+							<MenuItem value="price">Price</MenuItem>
+						</Select>
 						<TextField
-							label="Price"
+							error={errorOfTextField}
+							label={errorOfTextField ? formik.errors.value : 'Search'}
 							margin="normal"
-							{...formik.getFieldProps('price')}
+							type={formik.values.filterType === 'price' ? 'number' : 'text'}
+							{...formik.getFieldProps('value')}
 						/>
-						{/*{formik.errors.email ? <div>{formik.errors.email}</div> : null}*/}
-						<TextField
-							label="Brand"
-							margin="normal"
-							{...formik.getFieldProps('brand')}
-						/>
-						{/*{formik.errors.password ? <div>{formik.errors.password}</div> : null}*/}
-						<Button type={'submit'} variant={'contained'} color={'primary'}>Search</Button>
+						<Button type="submit" variant="contained" color="primary"
+										disabled={errorOfTextField || !(formik.values.value)}>Search</Button>
 					</FormGroup>
 				</FormControl>
 			</form>

@@ -1,17 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { API } from '../../api/api'
 import { productsActions } from './productsSlice'
+import { FormikValues } from '../../components/Filter'
 
 type DataForAPI = {
 	currentPage: number
 	pageSize: number
 }
 
-export type DataForGetFilteredProducts = {
-	price?: number
-	brand?: string,
-	product?: string
-}
 
 export const getProducts = createAsyncThunk('products/getProducts', async (arg: DataForAPI, { dispatch }) => {
 	try {
@@ -46,15 +42,17 @@ const getIds = createAsyncThunk('products/getIds', async (arg: Partial<DataForAP
 	}
 })
 
-export const getFilteredProducts = createAsyncThunk('products/getFilteredProducts', async (arg: DataForGetFilteredProducts, thunkAPI) => {
+export const getFilteredProducts = createAsyncThunk('products/getFilteredProducts', async (arg: FormikValues, { dispatch }) => {
 	try {
 		const ids = await API.filter(arg).then(res => res ? res.result : [])
 
-		const products = await thunkAPI.dispatch(getItems({ ids }))
+		const products = await dispatch(getItems({ ids }))
 			.unwrap()
 			.then(res => res ? res.result : [])
 
-		thunkAPI.dispatch(productsActions.setProducts({ products }))
+		dispatch(productsActions.setProducts({ products }))
+		debugger
+		dispatch(productsActions.setTotalProductsCount({ totalProductsCount: ids.length }))
 	} catch (e) {
 		console.error(e)
 	}
