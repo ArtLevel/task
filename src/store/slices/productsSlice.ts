@@ -10,7 +10,7 @@ type ProductsSlice = {
 
 const initialState: ProductsSlice = {
 	products: [],
-	pageSize: 5,
+	pageSize: 50,
 	totalProductsCount: 0,
 	currentPage: 1
 }

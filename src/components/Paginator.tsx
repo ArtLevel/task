@@ -22,7 +22,6 @@ export const Paginator = (props: Paginator) => {
 		pages.push(i)
 	}
 
-	console.log(pages, pagesCount, currentPage)
 
 	const portionCount = Math.ceil(pagesCount / portionSize)
 	const [portionNumber, setPortionNumber] = useState(1)

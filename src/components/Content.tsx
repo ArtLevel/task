@@ -19,6 +19,7 @@ export const Content = () => {
 	}
 
 	return <Grid container spacing={3} sx={{ padding: 5 }}>
+		<Paginator onPageChanged={onPageChanged} />
 		{products.map((product) => (
 			<CardOfProduct key={product.id} item={product} />
 		))}
