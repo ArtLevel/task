@@ -21,12 +21,19 @@ const slice = createSlice({
 	reducers: {
 		setProducts: (state, action: PayloadAction<{
 			products: Product[],
-			totalProductsCount: number,
-			currentPage: number
+			totalProductsCount?: number,
+			currentPage?: number
 		}>) => {
 			state.products = action.payload.products
-			state.totalProductsCount = action.payload.totalProductsCount
-			state.currentPage = action.payload.currentPage
+
+			if (action.payload.currentPage) {
+				state.currentPage = action.payload.currentPage
+			}
+
+			if (action.payload.totalProductsCount) {
+				state.totalProductsCount = action.payload.totalProductsCount
+			}
+
 		}
 	}
 })

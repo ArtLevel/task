@@ -7,7 +7,13 @@ type DataForAPI = {
 	pageSize: number
 }
 
-export const getProducts = createAsyncThunk('products/getIds', async (arg: DataForAPI, thunkAPI) => {
+export type DataForGetFilteredProducts = {
+	price?: number
+	brand?: string,
+	product?: string
+}
+
+export const getProducts = createAsyncThunk('products/getProducts', async (arg: DataForAPI, thunkAPI) => {
 	try {
 		const ids = await thunkAPI.dispatch(getIds(arg)).unwrap().then(res => res ? res.result : [])
 		const products = await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res ? res.result : [])
@@ -20,7 +26,7 @@ export const getProducts = createAsyncThunk('products/getIds', async (arg: DataF
 	}
 })
 
-export const getIds = createAsyncThunk('products/getIds', async (arg: Partial<DataForAPI>, thunkAPI) => {
+const getIds = createAsyncThunk('products/getIds', async (arg: Partial<DataForAPI>, thunkAPI) => {
 	try {
 		const { currentPage, pageSize } = arg
 
@@ -30,9 +36,29 @@ export const getIds = createAsyncThunk('products/getIds', async (arg: Partial<Da
 	}
 })
 
-export const getItems = createAsyncThunk('products/getItems', async (arg: { ids: string[] }, thunkAPI) => {
+export const getFilteredProducts = createAsyncThunk('products/getFilteredProducts', async (arg: DataForGetFilteredProducts, thunkAPI) => {
+	try {
+		const ids = await API.filter(arg).then(res => res ? res.result : [])
+
+		const products = await thunkAPI.dispatch(getItems({ ids })).unwrap().then(res => res ? res.result : [])
+
+		thunkAPI.dispatch(productsActions.setProducts({ products }))
+	} catch (e) {
+		console.error(e)
+	}
+})
+
+const getItems = createAsyncThunk('products/getItems', async (arg: { ids: string[] }, thunkAPI) => {
 	try {
 		return await API.get_items(arg.ids)
+	} catch (e) {
+		console.error(e)
+	}
+})
+
+export const getFields = createAsyncThunk('products/getFields', async (arg: { field: string }, thunkAPI) => {
+	try {
+		return await API.get_fields('brand', 3, 5)
 	} catch (e) {
 		console.error(e)
 	}

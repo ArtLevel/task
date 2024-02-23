@@ -2,6 +2,16 @@
 import md5 from 'md5'
 import axios from 'axios'
 import { Product } from '../types'
+import { DataForGetFilteredProducts } from '../store/slices/thunks'
+
+type DataForGetFields = {
+	action: string
+	params?: {
+		field?: string
+		offset?: number
+		limit?: number
+	}
+}
 
 // Функция для формирования значения X-Auth на основе пароля и временного штампа
 const generateXAuthHeaderValue = () => {
@@ -56,17 +66,28 @@ export const API = {
 			return { result: uniqueArray }
 		})
 	},
-	get_fields: async (field: string, offset: number, limit: number) => {
-		return await instance.post('', {
-			'action': 'get_fields',
-			'params': { 'field': field, 'offset': offset, 'limit': limit }
-		})
-	},
-	filter: async () => {
-		return await instance.post('', {
-				'action': 'filter',
-				'params': { 'price': 17500.0 }
+	get_fields: async (field?: string, offset?: number, limit?: number) => {
+		let params = {}
+		const data: DataForGetFields = {
+			'action': 'get_fields'
+		}
+
+		if (field && offset && limit) {
+			params = {
+				'field': field,
+				'offset': offset,
+				'limit': limit
 			}
-		)
+			data.params = params
+		}
+
+		return await instance.post('', data)
+	},
+	filter: async (filterField: DataForGetFilteredProducts) => {
+		return await instance.post<{ result: string[] }>('', {
+				'action': 'filter',
+				'params': { ...filterField }
+			}
+		).then(res => res.data)
 	}
 }
