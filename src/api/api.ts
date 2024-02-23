@@ -18,11 +18,22 @@ const instance = axios.create({
 })
 
 export const API = {
-	get_ids: async (offset = 1, limit = 10) => {
+	get_ids: async (offset?: number, limit?: number) => {
+		let params = {}
+
+		if (offset || limit) {
+			params = {
+				'offset': offset,
+				'limit': limit
+			}
+		}
+
 		return await instance.post<{ result: string[] }>('', {
 			'action': 'get_ids',
-			'params': { 'offset': offset, 'limit': limit }
-		}).then(res => res.data)
+			'params': params
+		}).then(res => {
+			return res.data
+		})
 	},
 	get_items: async (ids: string[]) => {
 		return await instance.post<{ result: Product[] }>('', {
