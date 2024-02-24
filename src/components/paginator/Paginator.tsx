@@ -18,8 +18,8 @@ export const Paginator = (props: Paginator) => {
 		portionSize,
 		pages,
 		portionNumber,
-		onPageChanged,
 		setPortionNumber,
+		onPageChanged,
 		incrementPortionNumberHandler,
 		decrementPortionNumberHandler
 	} = usePaginator(props)

@@ -1,19 +1,26 @@
-import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit'
+import { createSlice, isFulfilled, isPending, PayloadAction } from '@reduxjs/toolkit'
 
-type AppSlice = {
+export type AppSlice = {
 	error: null | string
 	status: 'loading' | 'fulfilled' | 'rejected'
 }
 
 const initialState: AppSlice = {
-	error: '',
+	error: null,
 	status: 'loading'
 }
 
 const slice = createSlice({
 	name: 'app',
 	initialState: initialState,
-	reducers: {},
+	reducers: {
+		setAppError: (state, action: PayloadAction<{ error: null | string }>) => {
+			state.error = action.payload.error
+		},
+		setAppStatus: (state, action: PayloadAction<{ status: AppSlice['status'] }>) => {
+			state.status = action.payload.status
+		}
+	},
 	extraReducers: builder => {
 		builder
 			.addMatcher(isPending, (state) => {
@@ -21,13 +28,10 @@ const slice = createSlice({
 			})
 			.addMatcher(isFulfilled, (state) => {
 				state.status = 'fulfilled'
-				state.error = ''
-			})
-			.addMatcher(isRejected, (state) => {
-				state.status = 'rejected'
-				state.error = 'ERROR'
+				state.error = null
 			})
 	}
 })
 
 export const appReducer = slice.reducer
+export const appActions = slice.actions
