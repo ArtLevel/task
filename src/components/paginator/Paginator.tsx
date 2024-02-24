@@ -55,14 +55,15 @@ export const Paginator = (props: Paginator) => {
 
 const StyledPaginator = styled.div`
     width: 100%;
-    max-height: 50px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 
     gap: 10px;
 
+    padding: 0 20px;
     margin: 10px 0;
 `
 
