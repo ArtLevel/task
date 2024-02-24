@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+## Тестовое задание:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### В ТЗ использовались такие библиотеки как:
 
-## Available Scripts
+React
+Redux / Redux Toolkit
+md5
+react-toastify
+Styled Components
+Formik
+Axios
+MUI (Material UI)
 
-In the project directory, you can run:
+### Все пункты по ТЗ выполнены. Сверх этого были сделаны следующие пункты (плюсы):
 
-### `yarn start`
+1. Добавлены тесты для всех редьюсеров (Для AppSlice и ProductSlice)
+2. Использовался TypeScript, строгая типизация (Для API тоже)
+3. Проект был мемоизирован, что помогло оптимизировать веб-приложение
+4. Использовался подход Чистых функций и Функционального программирования
+5. Использовалась правильная Архитектура проекта (UI ←→ BLL ←→ DAL)
+6. Проект использует понятную и простую Архитектуру Папок
+7. Однообразный стиль написания кода
+8. Адаптация веб-приложения в том числе и на мобильные телефоны
+9. Красивый и понятный пользовательский интерфейс (UI)
+10. Использовались кастомные хуки, для разделения UI логики (рендеринга) и BLL логики (бизнес / данные)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Результат:
+Сайт ( Использовал gitHub Pages): https://artlevel.github.io/task/
+Исходный код (Использовал git): https://github.com/ArtLevel/task
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### ПРОБЛЕМЫ КОТОРЫЕ МОГУТ ВОЗНИКНУТЬ ИЗ-ЗА ПРОТОКОЛА HTTP:
 
-### `yarn test`
+API, которое предоставлено в ТЗ использует протокол HTTP, этот протокол является незащищённым. Из-за этого возникает ошибка в браузере, которая гласит - ‘Blocked loading mixed active content “http://api.valantis.store:40000/”’. Эта ошибка возникает в браузере при попытке загрузить незащищенный (HTTP) контент на защищенной (HTTPS) странице (Использую gitHub pages). Это происходит из-за того, что современные браузеры ограничивают такие запросы из соображений безопасности.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### КАК ИСПРАВИТЬ ?
 
-### `yarn build`
+1. **Google Chrome**:
+- В адресной строке введите: `chrome://flags`.
+- Ищите опцию "Allow invalid certificates for resources loaded from localhost" и включите ее.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Mozilla Firefox**:
+- В адресной строке введите: `about:config`.
+- Нажмите "Принять риск и перейти."
+- Найдите параметр `security.mixed_content.block_active_content` и установите его значение в `false`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Microsoft Edge**:
+- В адресной строке введите: `edge://flags`.
+- Используйте поиск, чтобы найти опции, связанные с Mixed Content.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Осмотрите настройки вашей серверной стороны**:
+- Проверьте, доступен ли контент через HTTPS. Убедитесь, что все ресурсы, которые вы загружаете, такие как изображения, стили и скрипты, также доступны через HTTPS.
+- Убедитесь, что ваш сервер настроен правильно для обслуживания защищенного (HTTPS) контента.
