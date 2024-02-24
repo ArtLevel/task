@@ -24,6 +24,7 @@ export const getProducts = createAsyncThunk('products/getProducts', async (arg: 
 			.unwrap()
 			.then(res => res ? res.result.length : 0)
 
+		dispatch(productsActions.setIsFilterMode({ isFilterMode: false }))
 		dispatch(productsActions.setProducts({ products }))
 		dispatch(productsActions.setTotalProductsCount({ totalProductsCount }))
 		dispatch(productsActions.setCurrentPage({ currentPage: arg.currentPage }))
@@ -50,8 +51,8 @@ export const getFilteredProducts = createAsyncThunk('products/getFilteredProduct
 			.unwrap()
 			.then(res => res ? res.result : [])
 
+		dispatch(productsActions.setIsFilterMode({ isFilterMode: true }))
 		dispatch(productsActions.setProducts({ products }))
-		debugger
 		dispatch(productsActions.setTotalProductsCount({ totalProductsCount: ids.length }))
 	} catch (e) {
 		console.error(e)

@@ -12,14 +12,14 @@ export const CardOfProduct = (props: Props) => {
 	const { item } = props
 
 	return <Grid item>
-		<Card sx={{ minWidth: 500, maxWidth: 500, minHeight: 360, maxHeight: 360 }}>
+		<Card sx={{ minWidth: 250, maxWidth: 250, minHeight: 330, maxHeight: 330 }}>
 			<CardContent>
 				<CardMedia
-					sx={{ height: 180 }}
+					sx={{ height: 80 }}
 					image={productImg}
 					title={item.product}
 				/>
-				<Typography gutterBottom variant="h5" component="div">
+				<Typography gutterBottom variant="h6" component="div">
 					{item.product}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
