@@ -21,7 +21,7 @@ const generateXAuthHeaderValue = () => {
 }
 
 const instance = axios.create({
-	baseURL: 'http://api.valantis.store:40000/',
+	baseURL: 'https://api.valantis.store:41000/',
 	headers: {
 		'X-Auth': generateXAuthHeaderValue()
 	}
