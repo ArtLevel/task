@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { API } from '../../api/api'
-import { productsActions } from './productsSlice'
+import { productsActions } from './products/productsSlice'
 import { FormikValues } from '../../components/filter/useFilter'
 
 type DataForAPI = {

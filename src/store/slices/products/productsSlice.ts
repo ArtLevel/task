@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Product } from '../../types'
+import { Product } from '../../../types'
 
-type ProductsSlice = {
+export type ProductsSlice = {
 	products: Product[]
 	pageSize: number
 	totalProductsCount: number
