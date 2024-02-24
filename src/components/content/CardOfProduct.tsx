@@ -3,12 +3,13 @@ import { Product } from '../../types'
 
 // @ts-ignore
 import productImg from '../../icons/productImg.jpg'
+import { memo } from 'react'
 
 type Props = {
 	item: Product
 }
 
-export const CardOfProduct = (props: Props) => {
+export const CardOfProduct = memo((props: Props) => {
 	const { item } = props
 
 	return <Grid item>
@@ -36,4 +37,4 @@ export const CardOfProduct = (props: Props) => {
 			</CardContent>
 		</Card>
 	</Grid>
-}
+})

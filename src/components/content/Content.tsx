@@ -1,12 +1,12 @@
 import { Grid } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { CardOfProduct } from './CardOfProduct'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { getProducts } from '../../store/slices/thunks'
 import { Paginator } from '../paginator/Paginator'
 import { productsSelectors } from '../../store/slices/products/productsSlice'
 
-export const Content = () => {
+export const Content = memo(() => {
 	const products = useAppSelector(productsSelectors.getProducts)
 	const currentPage = useAppSelector(productsSelectors.getCurrentPage)
 	const pageSize = useAppSelector(productsSelectors.getPageSize)
@@ -46,4 +46,4 @@ export const Content = () => {
 		</Grid>
 		{!isFilterMode && <Paginator onPageChanged={onPageChanged} />}
 	</Grid>
-}
+})
