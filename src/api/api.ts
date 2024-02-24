@@ -81,7 +81,7 @@ export const API = {
 			data.params = params
 		}
 
-		return await instance.post('', data)
+		return await instance.post<{ result: string[] }>('', data).then(res => res.data)
 	},
 	filter: async (data: FormikValues) => {
 		const value = Number.isInteger(data.value[0]) ? Number(data.value) : data.value

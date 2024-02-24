@@ -11,7 +11,7 @@ export type FormikValues = {
 type FormikErrors = Partial<FormikValues>
 
 export const Filter = () => {
-	const { pageSize, currentPage } = useAppSelector(state => state.products)
+	const { pageSize, currentPage, fieldsOfFilter } = useAppSelector(state => state.products)
 	const dispatch = useAppDispatch()
 
 	const formik = useFormik({
@@ -53,9 +53,7 @@ export const Filter = () => {
 							{...formik.getFieldProps('filterType')}
 						>
 							<MenuItem value="off">Off</MenuItem>
-							<MenuItem value="brand">Brand</MenuItem>
-							<MenuItem value="product">Product</MenuItem>
-							<MenuItem value="price">Price</MenuItem>
+							{fieldsOfFilter.map(field => <MenuItem value={field} key={field}>{field}</MenuItem>)}
 						</Select>
 						{
 							formik.values.filterType !== 'off' &&

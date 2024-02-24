@@ -67,9 +67,11 @@ const getItems = createAsyncThunk('products/getItems', async (arg: { ids: string
 	}
 })
 
-export const getFields = createAsyncThunk('products/getFields', async (arg: { field: string }, thunkAPI) => {
+export const getFields = createAsyncThunk('products/getFields', async (arg: { field: string }, { dispatch }) => {
 	try {
-		return await API.get_fields('brand', 3, 5)
+		const res = await API.get_fields(arg.field)
+
+		dispatch(productsActions.setFieldsOfFilter({ fieldsOfFilter: res.result }))
 	} catch (e) {
 		console.error(e)
 	}

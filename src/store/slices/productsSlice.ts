@@ -7,6 +7,7 @@ type ProductsSlice = {
 	totalProductsCount: number
 	currentPage: number
 	isFilterMode: boolean
+	fieldsOfFilter: string[]
 }
 
 const initialState: ProductsSlice = {
@@ -14,7 +15,8 @@ const initialState: ProductsSlice = {
 	pageSize: 50,
 	totalProductsCount: 0,
 	currentPage: 1,
-	isFilterMode: false
+	isFilterMode: false,
+	fieldsOfFilter: []
 }
 
 const slice = createSlice({
@@ -34,6 +36,9 @@ const slice = createSlice({
 		},
 		setIsFilterMode: (state, action: PayloadAction<{ isFilterMode: boolean }>) => {
 			state.isFilterMode = action.payload.isFilterMode
+		},
+		setFieldsOfFilter: (state, action: PayloadAction<{ fieldsOfFilter: string[] }>) => {
+			state.fieldsOfFilter = action.payload.fieldsOfFilter
 		}
 	}
 })
