@@ -4,6 +4,7 @@ import { Content } from './components/content/Content'
 import { Filter } from './components/filter/Filter'
 import { getFields } from './store/slices/thunks'
 import { useAppDispatch } from './store/store'
+import { GlobalError } from './components/utils/GlobalError'
 
 function App() {
 	const dispatch = useAppDispatch()
@@ -17,6 +18,7 @@ function App() {
 			<Header />
 			<Filter />
 			<Content />
+			<GlobalError />
 		</>
 	)
 }
