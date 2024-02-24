@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react'
-import { useAppSelector } from '../store/store'
+import { useEffect } from 'react'
 import { Button } from '@mui/material'
 import styled, { css } from 'styled-components'
+import { usePaginator } from './usePaginator'
 
-type Paginator = {
+export type Paginator = {
 	portionSize?: number
 
 	onPageChanged: (currentPage: number) => void
 }
 
 export const Paginator = (props: Paginator) => {
-	const { portionSize = 10, onPageChanged } = props
-	const { currentPage, pageSize, totalProductsCount } = useAppSelector(
-		(state) => state.products
-	)
+	const {
+		portionCount,
+		currentPage,
+		leftPortionPageNumber,
+		rightPortionPageNumber,
+		portionSize,
+		pages,
+		portionNumber,
+		onPageChanged,
+		setPortionNumber,
+		incrementPortionNumberHandler,
+		decrementPortionNumberHandler
+	} = usePaginator(props)
 
-	const pagesCount = Math.ceil(totalProductsCount / pageSize)
-
-	const pages = []
-	for (let i = 1; i <= pagesCount; i++) {
-		pages.push(i)
-	}
-
-
-	const portionCount = Math.ceil(pagesCount / portionSize)
-	const [portionNumber, setPortionNumber] = useState(1)
-	const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
-	const rightPortionPageNumber = portionNumber * portionSize
+	useEffect(() => {
+		setPortionNumber(Math.ceil(currentPage / portionSize))
+	}, [currentPage])
 
 	const pagesMapped = pages
 		.filter((p) => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
@@ -39,15 +39,6 @@ export const Paginator = (props: Paginator) => {
 				{p}
 			</PaginatorItem>
 		))
-
-	const incrementPortionNumberHandler = () =>
-		setPortionNumber((prevState) => prevState + 1)
-	const decrementPortionNumberHandler = () =>
-		setPortionNumber((prevState) => prevState - 1)
-
-	useEffect(() => {
-		setPortionNumber(Math.ceil(currentPage / portionSize))
-	}, [currentPage])
 
 	return (
 		<StyledPaginator>

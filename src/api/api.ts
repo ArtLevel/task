@@ -2,7 +2,7 @@
 import md5 from 'md5'
 import axios from 'axios'
 import { Product } from '../types'
-import { FormikValues } from '../components/Filter'
+import { FormikValues } from '../components/filter/useFilter'
 
 type DataForGetFields = {
 	action: string

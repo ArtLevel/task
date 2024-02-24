@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material'
 import React, { useEffect } from 'react'
 import { CardOfProduct } from './CardOfProduct'
-import { useAppDispatch, useAppSelector } from '../store/store'
-import { getProducts } from '../store/slices/thunks'
-import { Paginator } from './Paginator'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import { getProducts } from '../../store/slices/thunks'
+import { Paginator } from '../paginator/Paginator'
 
 export const Content = () => {
 	const products = useAppSelector(state => state.products.products)

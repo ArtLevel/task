@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { API } from '../../api/api'
 import { productsActions } from './productsSlice'
-import { FormikValues } from '../../components/Filter'
+import { FormikValues } from '../../components/filter/useFilter'
 
 type DataForAPI = {
 	currentPage: number
 	pageSize: number
 }
-
 
 export const getProducts = createAsyncThunk('products/getProducts', async (arg: DataForAPI, { dispatch }) => {
 	try {

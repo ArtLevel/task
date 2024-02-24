@@ -1,8 +1,8 @@
-import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
-import { Product } from '../types'
+import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { Product } from '../../types'
 
 // @ts-ignore
-import productImg from '../icons/productImg.jpg'
+import productImg from '../../icons/productImg.jpg'
 
 type Props = {
 	item: Product
@@ -27,24 +27,13 @@ export const CardOfProduct = (props: Props) => {
 				</Typography>
 
 				<Typography variant="body2" color="text.secondary">
-					Brand: {item.brand || 'Not a Brand ! '}
+					Brand: {item.brand || 'Without Brand ! '}
 				</Typography>
 
 				<Typography variant="body2" color="text.secondary">
 					Price: {item.price} &#8381;
 				</Typography>
 			</CardContent>
-			<CardActions>
-				{/*<IconButton onClick={addProductHandler}>*/}
-				{/*	<AddIcon />*/}
-				{/*</IconButton>*/}
-				{/*<Typography variant="body2" color="text.secondary">*/}
-				{/*	Count: {count}*/}
-				{/*</Typography>*/}
-				{/*<IconButton onClick={removeProductHandler}>*/}
-				{/*	<RemoveIcon />*/}
-				{/*</IconButton>*/}
-			</CardActions>
 		</Card>
 	</Grid>
 }

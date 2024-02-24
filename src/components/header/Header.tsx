@@ -1,6 +1,6 @@
 import { AppBar, Grid, LinearProgress, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import { useAppSelector } from '../store/store'
+import { useAppSelector } from '../../store/store'
 
 export const Header = () => {
 	const status = useAppSelector(state => state.app.status)
