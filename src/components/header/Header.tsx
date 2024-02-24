@@ -1,9 +1,10 @@
 import { AppBar, Grid, LinearProgress, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 import { useAppSelector } from '../../store/store'
+import { appSelectors } from '../../store/slices/app/appSlice'
 
 export const Header = () => {
-	const status = useAppSelector(state => state.app.status)
+	const status = useAppSelector(appSelectors.getAppStatus)
 
 	return <AppBar position="static">
 		<Toolbar>

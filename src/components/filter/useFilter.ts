@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { useFormik } from 'formik'
 import { getFilteredProducts, getProducts } from '../../store/slices/thunks'
+import { productsSelectors } from '../../store/slices/products/productsSlice'
 
 export type FormikValues = {
 	filterType: 'product' | 'brand' | 'price' | 'off'
@@ -10,7 +11,10 @@ export type FormikValues = {
 type FormikErrors = Partial<FormikValues>
 
 export const useFilter = () => {
-	const { pageSize, currentPage, fieldsOfFilter } = useAppSelector(state => state.products)
+	const pageSize = useAppSelector(productsSelectors.getPageSize)
+	const currentPage = useAppSelector(productsSelectors.getCurrentPage)
+	const fieldsOfFilter = useAppSelector(productsSelectors.getFieldsOfFilter)
+
 	const dispatch = useAppDispatch()
 
 	const formik = useFormik({

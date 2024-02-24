@@ -30,8 +30,13 @@ const slice = createSlice({
 				state.status = 'fulfilled'
 				state.error = null
 			})
+	},
+	selectors: {
+		getAppError: (state) => state.error,
+		getAppStatus: (state) => state.status
 	}
 })
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
+export const appSelectors = slice.selectors

@@ -1,13 +1,14 @@
 import { useAppSelector } from '../../store/store'
 import { useState } from 'react'
 import { Paginator } from './Paginator'
+import { productsSelectors } from '../../store/slices/products/productsSlice'
 
 export const usePaginator = (props: Paginator) => {
 	const { portionSize = 10, onPageChanged } = props
-	const { currentPage, pageSize, totalProductsCount } = useAppSelector(
-		(state) => state.products
-	)
-
+	const pageSize = useAppSelector(productsSelectors.getPageSize)
+	const currentPage = useAppSelector(productsSelectors.getCurrentPage)
+	const totalProductsCount = useAppSelector(productsSelectors.getTotalProductsCount)
+	
 	const pagesCount = Math.ceil(totalProductsCount / pageSize)
 
 	const pages = []

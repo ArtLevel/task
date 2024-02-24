@@ -4,10 +4,15 @@ import { CardOfProduct } from './CardOfProduct'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { getProducts } from '../../store/slices/thunks'
 import { Paginator } from '../paginator/Paginator'
+import { productsSelectors } from '../../store/slices/products/productsSlice'
 
 export const Content = () => {
-	const products = useAppSelector(state => state.products.products)
-	const { currentPage, pageSize, isFilterMode, totalProductsCount } = useAppSelector(state => state.products)
+	const products = useAppSelector(productsSelectors.getProducts)
+	const currentPage = useAppSelector(productsSelectors.getCurrentPage)
+	const pageSize = useAppSelector(productsSelectors.getPageSize)
+	const isFilterMode = useAppSelector(productsSelectors.getIfFilterMode)
+	const totalProductsCount = useAppSelector(productsSelectors.getTotalProductsCount)
+
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {

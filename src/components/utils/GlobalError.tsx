@@ -1,9 +1,10 @@
 import { memo, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useAppSelector } from '../../store/store'
+import { appSelectors } from '../../store/slices/app/appSlice'
 
 export const GlobalError = memo(() => {
-	const errorMessage = useAppSelector(state => state.app.error)
+	const errorMessage = useAppSelector(appSelectors.getAppError)
 
 	useEffect(() => {
 		if (errorMessage) {

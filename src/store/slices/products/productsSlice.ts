@@ -40,8 +40,18 @@ const slice = createSlice({
 		setFieldsOfFilter: (state, action: PayloadAction<{ fieldsOfFilter: string[] }>) => {
 			state.fieldsOfFilter = action.payload.fieldsOfFilter
 		}
+	},
+	selectors: {
+		getProducts: (state) => state.products,
+		getTotalProductsCount: (state) => state.totalProductsCount,
+		getCurrentPage: (state) => state.currentPage,
+		getIfFilterMode: (state) => state.isFilterMode,
+		getFieldsOfFilter: (state) => state.fieldsOfFilter,
+		getPageSize: (state) => state.pageSize
 	}
 })
 
 export const productsReducer = slice.reducer
 export const productsActions = slice.actions
+export const productsSelectors = slice.selectors
+
